@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace JuniorFontenele\LaravelExceptions\Providers;
+namespace JuniorFontenele\LaravelExceptions;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -11,23 +11,22 @@ class LaravelExceptionsServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../../config/laravel-exceptions.php' => config_path('laravel-exceptions.php'),
+            __DIR__ . '/../config/laravel-exceptions.php' => config_path('laravel-exceptions.php'),
         ], 'config');
 
         $this->publishesMigrations([
-            __DIR__ . '/../../database/migrations/' => database_path('migrations'),
+            __DIR__ . '/../database/migrations/' => database_path('migrations'),
         ], 'migrations');
     }
 
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/laravel-exceptions.php',
+            __DIR__ . '/../config/laravel-exceptions.php',
             'laravel-exceptions',
         );
 
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->bindExceptionClasses();
     }
 

@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "JuniorFontenele\\LaravelExceptions\\Providers\\LaravelExceptionsServiceProvider"
+                "JuniorFontenele\\LaravelExceptions\\LaravelExceptionsServiceProvider"
             ],
             "aliases": {
                 "LaravelExceptions": "JuniorFontenele\\LaravelExceptions\\Facades\\LaravelExceptions"
