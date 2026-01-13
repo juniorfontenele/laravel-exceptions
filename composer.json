@@ -1,4 +1,5 @@
 {
+    "$schema": "https://getcomposer.org/schema.json",
     "name": "juniorfontenele/laravel-exceptions",
     "description": "A custom handler for Laravel Exceptions",
     "type": "library",
