@@ -6,6 +6,7 @@ namespace JuniorFontenele\LaravelExceptions\Exceptions;
 
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -113,10 +114,25 @@ class AppException extends Exception
                 'previous_code' => $this->getPrevious()?->getCode(),
                 'previous_stack_trace' => $this->getPrevious()?->getTraceAsString(),
             ]);
-        } catch (Throwable) {
-            // Do nothing
-        }
+        } catch (Throwable $e) {
+            Log::error('Failed to log exception to database', [
+                'original_exception' => [
+                    'class' => get_class($this),
+                    'message' => $this->getMessage(),
+                    'file' => $this->getFile(),
+                    'line' => $this->getLine(),
+                    'code' => $this->getCode(),
+                ],
+                'logging_exception' => [
+                    'class' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                    'code' => $e->getCode(),
+                ],
+            ]);
 
-        return false;
+            return false;
+        }
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace JuniorFontenele\LaravelExceptions;
 
 use Illuminate\Support\ServiceProvider;
+use JuniorFontenele\LaravelExceptions\Models\Exception;
 
 class LaravelExceptionsServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,8 @@ class LaravelExceptionsServiceProvider extends ServiceProvider
         ], 'migrations');
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-exceptions');
+
+        Exception::unguard();
     }
 
     public function register(): void
