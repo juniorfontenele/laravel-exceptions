@@ -76,7 +76,7 @@ class AppException extends Exception
 
     public function render()
     {
-        return response()->view('errors.app', [
+        return response()->view('laravel-exceptions::exception', [
             'code' => $this->errorId,
             'message' => $this->userMessage,
         ], $this->statusCode);

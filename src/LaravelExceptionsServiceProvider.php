@@ -17,6 +17,8 @@ class LaravelExceptionsServiceProvider extends ServiceProvider
         $this->publishesMigrations([
             __DIR__ . '/../database/migrations/' => database_path('migrations'),
         ], 'migrations');
+
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-exceptions');
     }
 
     public function register(): void
