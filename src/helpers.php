@@ -2,7 +2,6 @@
 
 declare(strict_types = 1);
 use JuniorFontenele\LaravelExceptions\Facades\LaravelExceptions;
-use Throwable;
 
 if (! function_exists('laravel_exceptions')) {
     /**
