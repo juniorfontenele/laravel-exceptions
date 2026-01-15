@@ -37,11 +37,11 @@ class AppException extends Exception
 
         return [
             'request' => [
-                'method' => request()?->method(),
-                'uri' => request()?->getRequestUri(),
-                'ip' => request()?->ip(),
-                'user_agent' => request()?->userAgent(),
-                'full_url' => request()?->fullUrl(),
+                'method' => request()->method(),
+                'uri' => request()->getRequestUri(),
+                'ip' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'full_url' => request()->fullUrl(),
             ],
             'status_code' => $this->statusCode,
             'error_id' => $this->errorId,
@@ -61,10 +61,10 @@ class AppException extends Exception
             ],
             'previous_exception' => $this->getPrevious() instanceof Throwable ? [
                 'class' => get_class($this->getPrevious()),
-                'message' => $this->getPrevious()?->getMessage(),
-                'file' => $this->getPrevious()?->getFile(),
-                'line' => $this->getPrevious()?->getLine(),
-                'code' => $this->getPrevious()?->getCode(),
+                'message' => $this->getPrevious()->getMessage(),
+                'file' => $this->getPrevious()->getFile(),
+                'line' => $this->getPrevious()->getLine(),
+                'code' => $this->getPrevious()->getCode(),
             ] : null,
         ];
     }
@@ -85,7 +85,7 @@ class AppException extends Exception
     public function report(): bool
     {
         try {
-            \App\Models\System\Exception::create([
+            \JuniorFontenele\LaravelExceptions\Models\Exception::create([
                 'exception_class' => get_class($this),
                 'message' => $this->getMessage(),
                 'user_message' => $this->userMessage,
@@ -106,7 +106,7 @@ class AppException extends Exception
                 'is_retryable' => $this->isRetryable(),
                 'stack_trace' => $this->getTraceAsString(),
                 'context' => $this->context(),
-                'previous_exception_class' => $this->getPrevious() instanceof \Throwable ? get_class($this->getPrevious()) : null,
+                'previous_exception_class' => $this->getPrevious() instanceof Throwable ? get_class($this->getPrevious()) : null,
                 'previous_message' => $this->getPrevious()?->getMessage(),
                 'previous_file' => $this->getPrevious()?->getFile(),
                 'previous_line' => $this->getPrevious()?->getLine(),

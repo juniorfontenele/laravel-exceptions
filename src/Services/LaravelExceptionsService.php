@@ -7,6 +7,7 @@ namespace JuniorFontenele\LaravelExceptions\Services;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Validation\ValidationException;
+use JuniorFontenele\LaravelExceptions\Exceptions\AppException;
 use Symfony\Component\HttpKernel\Exception\HttpException as LaravelHttpException;
 use Throwable;
 
@@ -16,43 +17,18 @@ class LaravelExceptionsService
     {
         $exceptions->render(function (LaravelHttpException $e) {
             match ($e->getStatusCode()) {
-                404 => throw new (app()->make('NotFoundHttpException'))(
-                    previous: $e,
-                ),
-                403 => throw new (app()->make('AccessDeniedHttpException'))(
-                    previous: $e,
-                ),
-                401 => throw new (app()->make('UnauthorizedHttpException'))(
-                    previous: $e,
-                ),
-                419 => throw new (app()->make('SessionExpiredHttpException'))(
-                    previous: $e,
-                ),
-                500 => throw new (app()->make('InternalServerErrorHttpException'))(
-                    previous: $e,
-                ),
-                503 => throw new (app()->make('ServiceUnavailableHttpException'))(
-                    previous: $e,
-                ),
-                504 => throw new (app()->make('GatewayTimeoutHttpException'))(
-                    previous: $e,
-                ),
-                400 => throw new (app()->make('BadRequestHttpException'))(
-                    previous: $e,
-                ),
-                405 => throw new (app()->make('MethodNotAllowedHttpException'))(
-                    previous: $e,
-                ),
-                422 => throw new (app()->make('UnprocessableEntityHttpException'))(
-                    previous: $e,
-                ),
-                429 => throw new (app()->make('TooManyRequestsHttpException'))(
-                    previous: $e,
-                ),
-                default => throw new (app()->make('HttpException'))(
-                    previous: $e,
-                    statusCode: $e->getStatusCode(),
-                ),
+                404 => $this->throwHttpException('NotFoundHttpException', $e),
+                403 => $this->throwHttpException('AccessDeniedHttpException', $e),
+                401 => $this->throwHttpException('UnauthorizedHttpException', $e),
+                419 => $this->throwHttpException('SessionExpiredHttpException', $e),
+                500 => $this->throwHttpException('InternalServerErrorHttpException', $e),
+                503 => $this->throwHttpException('ServiceUnavailableHttpException', $e),
+                504 => $this->throwHttpException('GatewayTimeoutHttpException', $e),
+                400 => $this->throwHttpException('BadRequestHttpException', $e),
+                405 => $this->throwHttpException('MethodNotAllowedHttpException', $e),
+                422 => $this->throwHttpException('UnprocessableEntityHttpException', $e),
+                429 => $this->throwHttpException('TooManyRequestsHttpException', $e),
+                default => $this->throwHttpException('HttpException', $e, $e->getStatusCode()),
             };
         });
 
@@ -60,16 +36,30 @@ class LaravelExceptionsService
             return match (true) {
                 $e instanceof AuthenticationException => false,
                 $e instanceof ValidationException => false,
-                default => null,
+                $e instanceof AppException => null,
+                default => $this->throwAppException('AppException', $e),
             };
-
-            if (! $e instanceof AppException) {
-                throw new (app()->make('AppException'))(
-                    $e->getMessage(),
-                    $e->getCode(),
-                    $e
-                );
-            }
         });
+    }
+
+    private function throwHttpException(string $httpExceptionKey, LaravelHttpException $previous, ?int $statusCode = null): never
+    {
+        $class = app()->make($httpExceptionKey);
+
+        throw new $class(
+            previous: $previous,
+            statusCode: $statusCode,
+        );
+    }
+
+    private function throwAppException(string $appExceptionKey, Throwable $previous): never
+    {
+        $class = app()->make($appExceptionKey);
+
+        throw new $class(
+            $previous->getMessage(),
+            $previous->getCode(),
+            $previous
+        );
     }
 }

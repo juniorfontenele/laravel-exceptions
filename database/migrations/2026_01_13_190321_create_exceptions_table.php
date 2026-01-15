@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('app_role')->nullable()->index();
             $table->string('host_name')->nullable();
             $table->string('host_ip')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignIdFor(config('laravel-exceptions.user_model'))->nullable()->constrained()->nullOnDelete();
             $table->boolean('is_retryable')->index();
             $table->longText('stack_trace')->nullable();
             $table->json('context')->nullable();

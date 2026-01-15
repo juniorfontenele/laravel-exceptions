@@ -32,60 +32,8 @@ class LaravelExceptionsServiceProvider extends ServiceProvider
 
     private function bindExceptionClasses(): void
     {
-        $this->app->bind('AppException', function () {
-            return config('laravel-exceptions.classes.AppException');
-        });
-
-        $this->app->bind('ExternalServiceException', function () {
-            return config('laravel-exceptions.classes.ExternalServiceException');
-        });
-
-        $this->app->bind('HttpException', function () {
-            return config('laravel-exceptions.classes.HttpException');
-        });
-
-        $this->app->bind('BadRequestHttpException', function () {
-            return config('laravel-exceptions.classes.BadRequestHttpException');
-        });
-
-        $this->app->bind('UnauthorizedHttpException', function () {
-            return config('laravel-exceptions.classes.UnauthorizedHttpException');
-        });
-
-        $this->app->bind('AccessDeniedHttpException', function () {
-            return config('laravel-exceptions.classes.AccessDeniedHttpException');
-        });
-
-        $this->app->bind('NotFoundHttpException', function () {
-            return config('laravel-exceptions.classes.NotFoundHttpException');
-        });
-
-        $this->app->bind('MethodNotAllowedHttpException', function () {
-            return config('laravel-exceptions.classes.MethodNotAllowedHttpException');
-        });
-
-        $this->app->bind('SessionExpiredHttpException', function () {
-            return config('laravel-exceptions.classes.SessionExpiredHttpException');
-        });
-
-        $this->app->bind('UnprocessableEntityHttpException', function () {
-            return config('laravel-exceptions.classes.UnprocessableEntityHttpException');
-        });
-
-        $this->app->bind('TooManyRequestsHttpException', function () {
-            return config('laravel-exceptions.classes.TooManyRequestsHttpException');
-        });
-
-        $this->app->bind('InternalServerErrorHttpException', function () {
-            return config('laravel-exceptions.classes.InternalServerErrorHttpException');
-        });
-
-        $this->app->bind('ServiceUnavailableHttpException', function () {
-            return config('laravel-exceptions.classes.ServiceUnavailableHttpException');
-        });
-
-        $this->app->bind('GatewayTimeoutHttpException', function () {
-            return config('laravel-exceptions.classes.GatewayTimeoutHttpException');
-        });
+        foreach (config('laravel-exceptions.classes', []) as $key => $class) {
+            $this->app->bind($key, fn () => $class);
+        }
     }
 }

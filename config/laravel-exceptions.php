@@ -3,9 +3,11 @@
 declare(strict_types = 1);
 
 return [
-    'table' => env('LARAVEL_EXCEPTIONS_TABLE', 'exceptions'),
+    'table' => env('LARAVEL_EXCEPTIONS_TABLE', 'exceptions'), // @phpstan-ignore-line
 
-    'write_to_database' => env('LARAVEL_EXCEPTIONS_WRITE_TO_DATABASE', true),
+    'write_to_database' => env('LARAVEL_EXCEPTIONS_WRITE_TO_DATABASE', true), // @phpstan-ignore-line
+
+    'user_model' => config('auth.providers.users.model'),
 
     // Exception class bindings
     'classes' => [
