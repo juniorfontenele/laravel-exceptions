@@ -25,3 +25,4 @@ README.md export-ignore
 /pint.json export-ignore
 /phpstan.neon export-ignore
 /rector.php export-ignore
+/phpunit.xml export-ignore
