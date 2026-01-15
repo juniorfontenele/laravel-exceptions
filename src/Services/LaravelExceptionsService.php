@@ -24,7 +24,7 @@ class LaravelExceptionsService
                 $e instanceof AuthenticationException => false,
                 $e instanceof ValidationException => false,
                 $e instanceof AppException => null,
-                default => $this->throwAppException($e),
+                default => config('laravel-exceptions.transform_exceptions') ? $this->throwAppException($e) : false,
             };
         });
     }

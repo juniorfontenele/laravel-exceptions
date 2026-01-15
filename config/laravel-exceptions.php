@@ -9,6 +9,8 @@ return [
 
     'user_model' => config('auth.providers.users.model'),
 
+    'transform_exceptions' => env('LARAVEL_EXCEPTIONS_TRANSFORM_EXCEPTIONS', true), // @phpstan-ignore-line
+
     // Exception class bindings
     'classes' => [
         'AppException' => JuniorFontenele\LaravelExceptions\Exceptions\AppException::class,
