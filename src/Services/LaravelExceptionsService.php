@@ -50,8 +50,8 @@ class LaravelExceptionsService
                     previous: $e,
                 ),
                 default => throw new (app()->make('HttpException'))(
-                    statusCode: $e->getStatusCode(),
                     previous: $e,
+                    statusCode: $e->getStatusCode(),
                 ),
             };
         });

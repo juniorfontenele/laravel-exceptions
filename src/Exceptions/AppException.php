@@ -106,7 +106,7 @@ class AppException extends Exception
                 'is_retryable' => $this->isRetryable(),
                 'stack_trace' => $this->getTraceAsString(),
                 'context' => $this->context(),
-                'previous_exception_class' => $this->getPrevious() ? get_class($this->getPrevious()) : null,
+                'previous_exception_class' => $this->getPrevious() instanceof \Throwable ? get_class($this->getPrevious()) : null,
                 'previous_message' => $this->getPrevious()?->getMessage(),
                 'previous_file' => $this->getPrevious()?->getFile(),
                 'previous_line' => $this->getPrevious()?->getLine(),

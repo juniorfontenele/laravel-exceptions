@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace JuniorFontenele\LaravelExceptions\Facades;
 
-use JuniorFontenele\LaravelExceptions\Services\LaravelExceptionsService;
 use Illuminate\Support\Facades\Facade;
+use JuniorFontenele\LaravelExceptions\Services\LaravelExceptionsService;
 
 class LaravelExceptions extends Facade
 {
