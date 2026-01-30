@@ -1,0 +1,16 @@
+{
+    "scripts": {
+        "build": "npx @tailwindcss/cli -i resources/css/app.css -o resources/dist/css/app.css --minify",
+        "dev": "npx @tailwindcss/cli -i resources/css/app.css -o resources/dist/css/app.css --minify --watch",
+        "publish": "php vendor/bin/testbench vendor:publish --tag=laravel-exceptions-assets --force",
+        "watch": "npm run dev & npm run publish:watch",
+        "publish:watch": "while true; do inotifywait -e modify resources/dist/css/app.css && npm run publish; done",
+        "start": "concurrently \"npm run dev\" \"npm run watch:publish\" --names \"CSS,PUBLISH\" --prefix-colors \"cyan,green\"",
+        "watch:publish": "nodemon --watch resources/dist/css/app.css --exec 'npm run publish'"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1",
+        "nodemon": "^3.1.11",
+        "tailwindcss": "^4.1.18"
+    }
+}

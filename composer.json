@@ -60,11 +60,19 @@
         ],
         "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
-        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "build": [
+            "npm run build",
+            "@php vendor/bin/testbench workbench:build --ansi"
+        ],
         "serve": [
             "Composer\\Config::disableProcessTimeout",
             "@build",
             "@php vendor/bin/testbench serve --ansi"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "npx concurrently \"npm run dev\" \"npm run watch:publish\" \"php vendor/bin/testbench serve --ansi\" --names \"CSS,PUBLISH,PHP\" --prefix-colors \"cyan,green,yellow\""
         ],
         "format": "@php vendor/bin/pint --config=pint.json --ansi",
         "rector": "@php vendor/bin/rector process --ansi --memory-limit=2G",
