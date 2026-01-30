@@ -18,9 +18,9 @@
     ],
     "require": {
         "php": "^8.4",
-        "illuminate/support": "^12",
-        "illuminate/contracts": "^12",
-        "illuminate/database": "^12"
+        "illuminate/support": "^12.0",
+        "illuminate/contracts": "^12.0",
+        "illuminate/database": "^12.0"
     },
     "extra": {
         "laravel": {
@@ -42,7 +42,8 @@
         "larastan/larastan": "^3.0",
         "laravel/pint": "^1.27",
         "driftingly/rector-laravel": "^2.1",
-        "pestphp/pest": "^4.3"
+        "pestphp/pest": "^4.3",
+        "laravel/framework": "^12.0"
     },
     "autoload-dev": {
         "psr-4": {
