@@ -5,7 +5,7 @@ declare(strict_types = 1);
 return [
     'table_name' => 'exceptions_log',
 
-    'model' => JuniorFontenele\LaravelExceptions\Models\ExceptionLog::class,
+    'model' => JuniorFontenele\LaravelExceptions\Models\Exception::class,
 
     'user_model' => config('auth.providers.users.model'),
 

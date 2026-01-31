@@ -4,10 +4,16 @@ declare(strict_types = 1);
 
 namespace JuniorFontenele\LaravelExceptions\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ExceptionLog extends ExceptionModel
+class Exception extends Model
 {
+    protected static function booted(): void
+    {
+        static::unguard();
+    }
+
     public function getTable(): string
     {
         return config('laravel-exceptions.table_name', parent::getTable());

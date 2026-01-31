@@ -6,8 +6,6 @@ namespace JuniorFontenele\LaravelExceptions;
 
 use Illuminate\Support\ServiceProvider;
 use JuniorFontenele\LaravelExceptions\Console\Commands\InstallCommand;
-use JuniorFontenele\LaravelExceptions\Models\ExceptionLog;
-use JuniorFontenele\LaravelExceptions\Models\ExceptionModel;
 
 class LaravelExceptionsServiceProvider extends ServiceProvider
 {
@@ -62,11 +60,5 @@ class LaravelExceptionsServiceProvider extends ServiceProvider
         );
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-
-        $this->app->bind(ExceptionModel::class, function ($app) {
-            $exceptionModel = $app['config']->get('laravel-exceptions.model', ExceptionLog::class);
-
-            return $app->make($exceptionModel);
-        });
     }
 }
